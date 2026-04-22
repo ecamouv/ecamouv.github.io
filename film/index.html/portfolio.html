@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Film & Photography - Enrique Camou Villa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0b0a;
+  --surface:#161210;
+  --surface2:#1f1916;
+  --border:#2e2320;
+  --border2:#3d2f2a;
+  --ember:#d95a2b;
+  --ember-glow:#ff7043;
+  --ash:#9e8880;
+  --smoke:#6b5a54;
+  --white:#f5ede8;
+  --charcoal:#2a1f1b;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:0.3}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:linear-gradient(to bottom,rgba(13,11,10,0.97),transparent)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:var(--white);text-decoration:none;letter-spacing:-0.02em}
+.nav-logo em{color:var(--ember);font-style:italic}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-back,.nav-contact{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:color 0.2s}
+.nav-back{color:var(--smoke);display:flex;align-items:center;gap:6px}
+.nav-back:hover{color:var(--ash)}
+.nav-contact{color:var(--smoke)}
+.nav-contact:hover{color:var(--ember)}
+
+/* PAGE HEADER */
+.page-header{position:relative;z-index:1;padding:9rem 3rem 3.5rem;max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border)}
+.page-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.page-label::before{content:'';display:block;width:24px;height:1px;background:var(--ember)}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95}
+.page-title em{font-style:italic;color:var(--ash);font-weight:700}
+
+/* FILTER BAR */
+.filter-bar{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:1.75rem 3rem;display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.filter-btn{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:6px 16px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--smoke);cursor:pointer;transition:all 0.2s}
+.filter-btn:hover{border-color:var(--border2);color:var(--ash)}
+.filter-btn.active{background:var(--ember);border-color:var(--ember);color:var(--white)}
+
+/* PROJECT GRID */
+.project-grid{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:3rem;display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+
+/* PROJECT DOOR */
+.project-door{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color 0.3s,transform 0.3s;animation:up 0.6s ease both}
+.project-door:hover{border-color:var(--border2);transform:translateY(-4px)}
+
+.door-thumb{position:relative;overflow:hidden;aspect-ratio:16/9;background:var(--surface2)}
+.door-thumb img{width:100%;height:100%;object-fit:cover;object-position: 50% 40%;display:block;filter:grayscale(100%) contrast(1.05);transition:filter 0.5s ease,transform 0.5s ease}
+.project-door:hover .door-thumb img{filter:grayscale(0%) contrast(1);transform:scale(1.03)}
+.door-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--border2)}
+
+.door-badge{position:absolute;top:12px;left:12px;font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;background:rgba(13,11,10,0.82);border:1px solid var(--border2);color:var(--ash);padding:4px 10px;border-radius:2px;backdrop-filter:blur(4px);transition:border-color 0.3s,color 0.3s}
+.project-door:hover .door-badge{border-color:var(--ember);color:var(--ember)}
+
+.door-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.65;transition:opacity 0.3s}
+.project-door:hover .door-play{opacity:1}
+.play-circle{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--white);display:flex;align-items:center;justify-content:center;background:rgba(13,11,10,0.5);backdrop-filter:blur(4px);transition:background 0.3s,border-color 0.3s}
+.project-door:hover .play-circle{background:var(--ember);border-color:var(--ember)}
+.play-triangle{width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:14px solid var(--white);margin-left:3px}
+
+.door-body{padding:1.4rem 1.6rem 1.6rem; }
+.door-meta{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ember);margin-bottom:0.5rem}
+.door-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em;color:var(--white);line-height:1.2;margin-bottom:0.4rem}
+.door-desc{font-size:0.83rem;color:var(--smoke);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.door-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.door-client{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;color:var(--smoke)}
+.door-client span{color:var(--ash)}
+.door-arrow{font-size:0.85rem;color:var(--border2);transition:color 0.2s,transform 0.2s}
+.project-door:hover .door-arrow{color:var(--ember);transform:translateX(4px)}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(9,7,6,0.97);overflow-y:auto;animation:fadeIn 0.25s ease}
+.overlay.open{display:block}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.overlay-inner{max-width:940px;margin:0 auto;padding:5rem 3rem 5rem;position:relative}
+
+.overlay-close {
+  position: fixed;
+  top: 1.5rem;
+  left: 2rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;          
+  background: #ff7043;      
+  padding: 0.6rem 1.2rem;   
+  border-radius: 50px;      
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;    
+  z-index: 210;
+}
+
+.overlay-close:hover {
+  transform: scale(1.3);   
+  background: #f4511e;    
+}
+
+.ov-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.ov-label::before{content:'';display:block;width:24px;height:1px;background:var(--ember)}
+.ov-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95;margin-bottom:1.75rem}
+
+/* CAROUSEL */
+.carousel{position:relative;margin-bottom:2.5rem}
+.carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;cursor:grab}
+.carousel-track::-webkit-scrollbar{display:none}
+.carousel-track.dragging{cursor:grabbing;user-select:none}
+.carousel-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  /* 1. Change or remove aspect-ratio to let the image dictate height */
+  height: 70vh; /* Adjust this value to your preferred viewing height */
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg);
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  /* 2. Change 'cover' to 'contain' to see the whole image */
+  object-fit: contain; 
+  display: block;
+  transition: filter 0.5s;
+}
+.carousel-slide:hover img{filter:grayscale(0%)}
+.carousel-dots{display:flex;justify-content:center;gap:6px;margin-top:1rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--border2);border:none;cursor:pointer;transition:background 0.2s,transform 0.2s;padding:0}
+.dot.active{background:var(--ember);transform:scale(1.3)}
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: #ff7043; /* Your orange */
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  opacity: 0.8;
+}
+
+.carousel-nav:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.2); /* 20% growth */
+}
+
+.carousel-nav.prev { left: 1rem; }
+.carousel-nav.next { right: 1rem; }
+
+/* Hide arrows if there's only one image */
+.carousel-track:only-child ~ .carousel-nav {
+  display: none;
+}
+
+/* VIDEO */
+.video-wrap{aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:var(--surface2);margin-bottom:1.5rem}
+.video-wrap iframe{width:100%;height:100%;border:none;display:block}
+
+/* META GRID */
+.ov-meta-grid{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2.5rem}
+.ov-meta-cell{background:var(--surface);padding:1rem 1.25rem}
+.ov-meta-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--smoke);margin-bottom:4px}
+.ov-meta-value{font-size:0.9rem;color:var(--ash)}
+
+/* DESCRIPTION */
+.ov-desc{font-size:1rem;color:var(--ash);line-height:1.8;font-weight:300;margin-bottom:2.5rem;max-width:680px}
+
+/* SECTION LABEL */
+.ov-section-label{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.ov-section-label::before{content:'';display:block;width:18px;height:1px;background:var(--ember)}
+
+/* CREDITS */
+.credits-list{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2.5rem}
+.credit-row{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1.25rem;background:var(--surface);border-bottom:1px solid var(--border)}
+.credit-row:last-child{border-bottom:none}
+.credit-role{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--smoke)}
+.credit-name{font-size:0.9rem;color:var(--ash)}
+
+/* LINKS */
+.ov-links{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem}
+.ov-link{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);text-decoration:none;border:1px solid var(--ember);border-radius:3px;padding:10px 20px;transition:background 0.2s,color 0.2s}
+.ov-link:hover{background:var(--ember);color:var(--white)}
+
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:700px){
+  nav{padding:1rem 1.25rem}
+  .page-header,.filter-bar,.project-grid{padding-left:1.25rem;padding-right:1.25rem}
+  .project-grid{grid-template-columns:1fr}
+  .overlay-inner{padding:5rem 1.25rem 3rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <!-- TODO: Replace with your name -->
+  <a href="../index.html" class="nav-logo">enrique<em>camou</em></a>
+  <div class="nav-right">
+    <a href="../index.html" class="nav-back">&#x2190; Home</a>
+    <a href="../contact.html" class="nav-contact">Contact</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-label">Film &amp; Photography</div>
+  <h1 class="page-title">Visual<br><em>Work</em></h1>
+</header>
+
+<!-- Filter buttons injected by JS -->
+<div class="filter-bar" id="filterBar"></div>
+
+<!-- Project cards injected by JS -->
+<div class="project-grid" id="grid"></div>
+
+<!-- ONE generic overlay — populated by JS on click -->
+<div class="overlay" id="overlay">
+  <div class="overlay-inner">
+    <button class="overlay-close" id="overlayClose">&#x2715;&nbsp; Close</button>
+    <div class="ov-label"   id="ovLabel"></div>
+    <h2  class="ov-title"   id="ovTitle"></h2>
+    <div id="ovVideo"></div>
+    <div class="carousel"   id="ovCarousel" style="display:none">
+      <div class="carousel-track" id="ovTrack"></div>
+      <div class="carousel-dots"  id="ovDots"></div>
+      <button class="carousel-nav prev" id="prevBtn">&#x2190;</button>
+  
+      <div class="carousel-track" id="carouselTrack">
+        </div>
+      <button class="carousel-nav next" id="nextBtn">&#x2192;</button>
+      
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+    <div class="ov-meta-grid" id="ovMeta"></div>
+    <p   class="ov-desc"    id="ovDesc"></p>
+    <div id="ovCredits"></div>
+    <div class="ov-links"   id="ovLinks"></div>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   PROJECT DATA ARRAY
+   ──────────────────────────────────────────────────────────────
+   To add a new project: copy one object, paste it at the end of
+   the array, update the fields, save. That's it — no HTML to touch.
+
+   REQUIRED fields:
+     id          unique slug, no spaces            e.g. "my-project"
+     type        must match a filter value below   e.g. "photo"
+     badge       label on the card thumbnail       e.g. "Photography"
+     year        string                            e.g. "2024"
+     category    shown next to year on card        e.g. "Series"
+     title       card + overlay headline
+     description 1-2 sentence card summary
+     client      shown in card footer
+
+   OPTIONAL fields (omit or set to null to hide):
+     thumbnail        path to card image           e.g. "../images/thumb.jpg"
+     fullDescription  longer overlay paragraph
+     meta             object — any key:value pairs shown in meta grid
+     images           array of image paths for carousel
+     video            YouTube or Vimeo embed URL   e.g. "https://www.youtube.com/embed/ID"
+     credits          array of { role, name }
+     links            array of { label, url }
+                      suggested labels: "Watch on YouTube", "Watch on Vimeo",
+                      "GitHub Repo", "Live Site", "Behance", "Instagram",
+                      "Client Website", "Press Article"
+   ================================================================ */
+const projects = [
+    {
+    id: "adaptive",
+    type: "photo",
+    badge: "Photography",
+    year: "2026",
+    category: "Series",
+    title: "Adaptive Athletics Media Day",
+    description: "Media campaign for the entirety of the Adaptive Athletics department",
+    client: "University of Arizona | Adaptive Athletics",
+    thumbnail: "/images/adaptive/thumbnail.jpg",
+    fullDescription: "Directed a comprehensive two-day media campaign for the University of Arizona Adaptive Athletics department, overseeing the production of high-end photography, social media assets, and video interviews.",
+    meta: {
+      "Year":   "2026",
+      "Client": "University of Arizona | Adaptive Athletics",
+      "Format": "Media Campaign",
+    },
+    images: [
+    "/images/adaptive/adap1.jpg",
+    "/images/adaptive/adap2.jpg",
+    "/images/adaptive/adap3.jpg",
+    "/images/adaptive/adap4.jpg",
+    "/images/adaptive/adap5.jpg",
+    "/images/adaptive/adap6.jpg",
+    "/images/adaptive/adap7.jpg",
+    "/images/adaptive/adap8.jpg",
+    ], credits: [
+      { role: "Photography", name: "Enrique Camou Villa" },
+      { role: "Event Planner", name: "Destani Grijalva" }]
+    },
+  {
+    id: "hockey",
+    type: "photo",
+    badge: "Photography",
+    year: "2025",
+    category: "Series",
+    title: "Arizona Hockey Media Day",
+    description: "Media day for the University of Arizona´s Men´s and Women´s hockey teams.",
+    client: "University of Arizona",
+    thumbnail: "/images/hockey/thumbnail.png",
+    fullDescription: "Photo campaign for the University of Arizona´s Men´s and Women´s hockey teams for 2025-2026 season.",
+    meta: {
+      "Year":   "2025",
+      "Client": "University of Arizona",
+      "Format": "Media Day",
+      // change!!!
+    },
+    images: [
+     "/images/hockey/men1.jpg",
+     "/images/hockey/men2.jpg",
+     "/images/hockey/men3.jpg",
+     "/images/hockey/women1.jpg",
+     "/images/hockey/women2.jpg"
+    ], credits: [
+      { role: "Photography", name: "Enrique Camou Villa" }]
+},
+    {
+    id: "centennialAwards",
+    type: "photo",
+    badge: "Photography",
+    year: "2025",
+    category: "Series",
+    title: "2025 Graduate Centennial Achievement Award Headshots",
+    description: "Captured headshots for the 2025 Centennial Award recipients.",
+    client: "University of Arizona | Student Affairs",
+    thumbnail: "/images/centennial/award2.jpg",
+    fullDescription: "Captured portraits and professionally for 5 of the recipients of the 2025 Centennial Achievement Award.",
+    meta: {
+      "Year":   "2025",
+      "Client": "University of Arizona | Student Affairs",
+      "Format": "Portraits",
+    },
+    images: [
+    "/images/centennial/award1.jpg",
+    "/images/centennial/award2.jpg",
+    "/images/centennial/award3.jpg",
+    "/images/centennial/award4.jpg",
+    "/images/centennial/award5.jpg"
+
+    ], credits: [
+      { role: "Photography", name: "Enrique Camou Villa" }
+    ], links: [
+      {label: "Student Affairs Page", url:"https://studentaffairs.arizona.edu/centennial-achievement-graduate-awards"}
+    ]
+    }
+    
+];
+
+/* ================================================================
+   FILTER CONFIG
+   Add entries here to match new project types you introduce.
+   { label, value } — value must match project.type strings above.
+   ================================================================ */
+const filters = [
+  { label: "All",         value: "all" },
+  { label: "Photography", value: "photo" },
+  { label: "Film",        value: "film" },
+  { label: "Commercial",  value: "commercial" },
+];
+
+/* ── render filter bar ── */
+const filterBar = document.getElementById("filterBar");
+filters.forEach((f, i) => {
+  const btn = document.createElement("button");
+  btn.className = "filter-btn" + (i === 0 ? " active" : "");
+  btn.textContent = f.label;
+  btn.onclick = () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".project-door").forEach(d => {
+      d.style.display = (f.value === "all" || d.dataset.type === f.value) ? "block" : "none";
+    });
+  };
+  filterBar.appendChild(btn);
+});
+
+/* ── render project grid ── */
+const grid = document.getElementById("grid");
+projects.forEach((p, i) => {
+  const hasVideo = !!p.video;
+  const thumb = p.thumbnail
+    ? `<img src="${p.thumbnail}" alt="${p.title}"/>`
+    : `<div class="door-thumb-placeholder">[ thumbnail ]</div>`;
+  const playBtn = hasVideo
+    ? `<div class="door-play"><div class="play-circle"><div class="play-triangle"></div></div></div>`
+    : "";
+  const card = document.createElement("div");
+  card.className = "project-door";
+  card.dataset.type = p.type;
+  card.style.animationDelay = `${0.05 + i * 0.07}s`;
+  card.onclick = () => openOverlay(p.id);
+  card.innerHTML = `
+    <div class="door-thumb">
+      ${thumb}
+      <div class="door-badge">${p.badge}</div>
+      ${playBtn}
+    </div>
+    <div class="door-body">
+      <div class="door-meta">${p.year} &mdash; ${p.category}</div>
+      <div class="door-title">${p.title}</div>
+      <div class="door-desc">${p.description}</div>
+      <div class="door-footer">
+        <div class="door-client">Client: <span>${p.client}</span></div>
+        <span class="door-arrow">&#x2192;</span>
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+/* ── open overlay ── */
+function openOverlay(id) {
+  const p = projects.find(x => x.id === id);
+  if (!p) return;
+
+  /* label */
+  document.getElementById("ovLabel").textContent = `${p.badge} — ${p.year}`;
+
+  /* title: last word italicised */
+  const words = p.title.split(" ");
+  const last  = words.pop();
+  document.getElementById("ovTitle").innerHTML =
+    (words.length ? words.join(" ") + " " : "") + `<em>${last}</em>`;
+
+  /* video */
+  const ovVideo = document.getElementById("ovVideo");
+  ovVideo.innerHTML = p.video
+    ? `<div class="video-wrap" style="margin-bottom:1.5rem">
+         <iframe src="${p.video}" allowfullscreen loading="lazy"></iframe>
+       </div>`
+    : "";
+
+  /* carousel */
+  const imgs     = (p.images || []).filter(Boolean);
+  const carousel = document.getElementById("ovCarousel");
+  const track    = document.getElementById("ovTrack");
+  const dots     = document.getElementById("ovDots");
+  if (imgs.length) {
+    track.innerHTML = imgs.map(src =>
+      `<div class="carousel-slide"><img src="${src}" alt="${p.title}"/></div>`
+    ).join("");
+    carousel.style.display = "block";
+    initCarousel(track, dots);
+  } else {
+    carousel.style.display = "none";
+    track.innerHTML = "";
+    dots.innerHTML  = "";
+  }
+
+  /* meta grid */
+  const meta     = p.meta || {};
+  const metaKeys = Object.keys(meta);
+  const ovMeta   = document.getElementById("ovMeta");
+  if (metaKeys.length) {
+    ovMeta.style.gridTemplateColumns = `repeat(${Math.min(metaKeys.length, 4)}, 1fr)`;
+    ovMeta.innerHTML = metaKeys.map(k =>
+      `<div class="ov-meta-cell">
+         <div class="ov-meta-label">${k}</div>
+         <div class="ov-meta-value">${meta[k]}</div>
+       </div>`
+    ).join("");
+    ovMeta.style.display = "grid";
+  } else {
+    ovMeta.style.display = "none";
+  }
+
+  /* description */
+  const ovDesc = document.getElementById("ovDesc");
+  if (p.fullDescription) {
+    ovDesc.textContent  = p.fullDescription;
+    ovDesc.style.display = "block";
+  } else {
+    ovDesc.style.display = "none";
+  }
+
+  /* credits */
+  const ovCredits = document.getElementById("ovCredits");
+  if (p.credits && p.credits.length) {
+    ovCredits.innerHTML = `
+      <div class="ov-section-label">Credits</div>
+      <div class="credits-list">
+        ${p.credits.map(c =>
+          `<div class="credit-row">
+             <span class="credit-role">${c.role}</span>
+             <span class="credit-name">${c.name}</span>
+           </div>`
+        ).join("")}
+      </div>`;
+  } else {
+    ovCredits.innerHTML = "";
+  }
+
+  /* links */
+  const ovLinks = document.getElementById("ovLinks");
+  if (p.links && p.links.length) {
+    ovLinks.innerHTML    = p.links.map(l =>
+      `<a href="${l.url}" target="_blank" rel="noopener" class="ov-link">${l.label} &#x2197;</a>`
+    ).join("");
+    ovLinks.style.display = "flex";
+  } else {
+    ovLinks.style.display = "none";
+  }
+
+  /* open */
+  const overlay = document.getElementById("overlay");
+  overlay.classList.add("open");
+  overlay.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+}
+
+/* ── close overlay ── */
+document.getElementById("overlayClose").onclick = closeOverlay;
+document.getElementById("overlay").addEventListener("click", e => {
+  if (e.target === e.currentTarget) closeOverlay();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeOverlay(); });
+function closeOverlay() {
+  document.getElementById("overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+/* ── carousel ── */
+function initCarousel(track, dotsEl) {
+  const slides = track.querySelectorAll(".carousel-slide");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  if (slides.length <= 1) {
+    if(prevBtn) prevBtn.style.display = "none";
+    if(nextBtn) nextBtn.style.display = "none";
+    // ... rest of your single-slide logic
+    return;
+  }
+
+  // Next Button Logic
+  nextBtn.onclick = () => {
+    track.scrollBy({ left: track.offsetWidth, behavior: 'smooth' });
+  };
+
+  // Previous Button Logic
+  prevBtn.onclick = () => {
+    track.scrollBy({ left: -track.offsetWidth, behavior: 'smooth' });
+  };
+  dotsEl.innerHTML = "";
+  if (slides.length <= 1) { dotsEl.style.display = "none"; return; }
+  dotsEl.style.display = "flex";
+  slides.forEach((_, i) => {
+    const d = document.createElement("button");
+    d.className = "dot" + (i === 0 ? " active" : "");
+    d.onclick = () => track.scrollTo({ left: track.offsetWidth * i, behavior: "smooth" });
+    dotsEl.appendChild(d);
+  });
+  track.addEventListener("scroll", () => {
+    const idx = Math.round(track.scrollLeft / track.offsetWidth);
+    dotsEl.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("active", i === idx));
+  }, { passive: true });
+  let isDown = false, startX, scrollL;
+  track.addEventListener("mousedown", e => {
+    isDown = true; track.classList.add("dragging");
+    startX = e.pageX - track.offsetLeft; scrollL = track.scrollLeft;
+  });
+  track.addEventListener("mouseleave", () => { isDown = false; track.classList.remove("dragging"); });
+  track.addEventListener("mouseup",    () => { isDown = false; track.classList.remove("dragging"); });
+  track.addEventListener("mousemove",  e => {
+    if (!isDown) return;
+    e.preventDefault();
+    track.scrollLeft = scrollL - (e.pageX - track.offsetLeft - startX) * 1.2;
+  });
+}
+
+</script>
+</body>
+</html>
