@@ -4,49 +4,51 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Coding - Enrique Camou Villa</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d0b0a;
-  --surface:#161210;
-  --surface2:#1f1916;
-  --border:#2e2320;
-  --border2:#3d2f2a;
-  --ember:#d95a2b;
-  --ember-glow:#ff7043;
-  --ash:#9e8880;
-  --smoke:#6b5a54;
-  --white:#f5ede8;
-  --charcoal:#2a1f1b;
+  --bg:#ffffff;
+  --surface:#f5f5f5;
+  --surface2:#ececec;
+  --border:#d8d8d8;
+  --border2:#b0b0b0;
+  --accent:#000000;
+  --accent-glow:#222222;
+  --ash:#555555;
+  --smoke:#888888;
+  --white:#000000;
+  --charcoal:#e8e8e8;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:0.3}
+body{background:var(--bg);color:var(--white);font-family:-apple-system,system-ui,'Helvetica Neue',sans-serif;min-height:100vh;overflow-x:hidden}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:linear-gradient(to bottom,rgba(13,11,10,0.97),transparent)}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:var(--white);text-decoration:none;letter-spacing:-0.02em}
-.nav-logo em{color:var(--ember);font-style:italic}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:linear-gradient(to bottom,rgba(255,255,255,0.97),transparent)}
+.nav-logo{font-family:-apple-system,system-ui,'Helvetica Neue',sans-serif;font-size:1.1rem;font-weight:900;color:var(--white);text-decoration:none;letter-spacing:-0.02em}
+.nav-logo em{color:var(--accent);font-style:italic}
 .nav-right{display:flex;align-items:center;gap:2rem}
-.nav-back,.nav-contact{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:color 0.2s}
+.nav-back,.nav-contact{font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:color 0.2s}
 .nav-back{color:var(--smoke);display:flex;align-items:center;gap:6px}
 .nav-back:hover{color:var(--ash)}
 .nav-contact{color:var(--smoke)}
-.nav-contact:hover{color:var(--ember)}
+.nav-contact:hover{color:var(--accent)}
 
 /* PAGE HEADER */
 .page-header{position:relative;z-index:1;padding:9rem 3rem 3.5rem;max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border)}
-.page-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
-.page-label::before{content:'';display:block;width:24px;height:1px;background:var(--ember)}
-.page-title{font-family:system-ui, sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95}
+.page-label{font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.page-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+.page-title{font-family:-apple-system,system-ui,'Helvetica Neue',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95}
 .page-title em{font-style:italic;color:var(--ash);font-weight:700}
+
+/* LANGUAGE TAGS */
+.lang-bar{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:1.5rem 3rem;display:flex;align-items:center;gap:0.6rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.lang-tag{font-family:system-ui,sans-serif;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:2px;border:1px solid var(--border2);background:transparent;color:var(--ash)}
 
 /* FILTER BAR */
 .filter-bar{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:1.75rem 3rem;display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.filter-btn{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:6px 16px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--smoke);cursor:pointer;transition:all 0.2s}
+.filter-btn{font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:6px 16px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--smoke);cursor:pointer;transition:all 0.2s}
 .filter-btn:hover{border-color:var(--border2);color:var(--ash)}
-.filter-btn.active{background:var(--ember);border-color:var(--ember);color:var(--white)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#ffffff}
 
 /* PROJECT GRID */
 .project-grid{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:3rem;display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
@@ -55,125 +57,55 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .project-door{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color 0.3s,transform 0.3s;animation:up 0.6s ease both}
 .project-door:hover{border-color:var(--border2);transform:translateY(-4px)}
 
-.door-thumb{position:relative;overflow:hidden;aspect-ratio:16/9;background:var(--surface2)}
-.door-thumb img{width:100%;height:100%;object-fit:cover;object-position: 50% 40%;display:block;filter:grayscale(100%) contrast(1.05);transition:filter 0.5s ease,transform 0.5s ease}
+.door-thumb{position:relative;overflow:hidden;aspect-ratio:16/9;background:linear-gradient(135deg,rgba(255,255,255,0.7) 0%,rgba(0,0,0,0.3) 100%)}
+.door-thumb img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block;filter:grayscale(100%) contrast(1.05);transition:filter 0.5s ease,transform 0.5s ease}
 .project-door:hover .door-thumb img{filter:grayscale(0%) contrast(1);transform:scale(1.03)}
-.door-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--border2)}
+.door-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.1em;color:var(--border2);text-align:center;position:absolute;inset:0}
 
-.door-badge{position:absolute;top:12px;left:12px;font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;background:rgba(13,11,10,0.82);border:1px solid var(--border2);color:var(--ash);padding:4px 10px;border-radius:2px;backdrop-filter:blur(4px);transition:border-color 0.3s,color 0.3s}
-.project-door:hover .door-badge{border-color:var(--ember);color:var(--ember)}
+.door-badge{position:absolute;top:12px;left:12px;font-family:system-ui,sans-serif;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;background:rgba(255,255,255,0.82);border:1px solid var(--border2);color:var(--ash);padding:4px 10px;border-radius:2px;backdrop-filter:blur(4px);transition:border-color 0.3s,color 0.3s}
+.project-door:hover .door-badge{border-color:var(--accent);color:var(--accent)}
 
-.door-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.65;transition:opacity 0.3s}
-.project-door:hover .door-play{opacity:1}
-.play-circle{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--white);display:flex;align-items:center;justify-content:center;background:rgba(13,11,10,0.5);backdrop-filter:blur(4px);transition:background 0.3s,border-color 0.3s}
-.project-door:hover .play-circle{background:var(--ember);border-color:var(--ember)}
-.play-triangle{width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:14px solid var(--white);margin-left:3px}
+/* stack tags on card */
+.door-stack{position:absolute;bottom:10px;right:10px;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.stack-tag{font-family:system-ui,sans-serif;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.88);border:1px solid var(--border2);color:var(--ash);padding:3px 8px;border-radius:2px;backdrop-filter:blur(4px)}
 
-.door-body{padding:1.4rem 1.6rem 1.6rem; }
-.door-meta{font-family:system-ui, sans-serif;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ember);margin-bottom:0.5rem}
-.door-title{font-family:system-ui, sans-serif;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em;color:var(--white);line-height:1.2;margin-bottom:0.4rem}
+.door-body{padding:1.4rem 1.6rem 1.6rem}
+.door-meta{font-family:system-ui,sans-serif;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem}
+.door-title{font-family:-apple-system,system-ui,'Helvetica Neue',sans-serif;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em;color:var(--white);line-height:1.2;margin-bottom:0.4rem}
 .door-desc{font-size:0.83rem;color:var(--smoke);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .door-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border)}
-.door-client{font-family:system-ui, sans-serif;font-size:0.65rem;letter-spacing:0.08em;color:var(--smoke)}
+.door-client{font-family:system-ui,sans-serif;font-size:0.65rem;letter-spacing:0.08em;color:var(--smoke)}
 .door-client span{color:var(--ash)}
 .door-arrow{font-size:0.85rem;color:var(--border2);transition:color 0.2s,transform 0.2s}
-.project-door:hover .door-arrow{color:var(--ember);transform:translateX(4px)}
+.project-door:hover .door-arrow{color:var(--accent);transform:translateX(4px)}
 
 /* OVERLAY */
-.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(9,7,6,0.97);overflow-y:auto;animation:fadeIn 0.25s ease}
+.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(255,255,255,0.98);overflow-y:auto;animation:fadeIn 0.25s ease}
 .overlay.open{display:block}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .overlay-inner{max-width:940px;margin:0 auto;padding:5rem 3rem 5rem;position:relative}
 
-.overlay-close {
-  position: fixed;
-  top: 1.5rem;
-  left: 2rem;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #ffffff;          
-  background: #ff7043;      
-  padding: 0.6rem 1.2rem;   
-  border-radius: 50px;      
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s;    
-  z-index: 210;
-}
+.overlay-close{position:fixed;top:1.5rem;left:2rem;font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:#ffffff;background:#000000;padding:0.6rem 1.2rem;border-radius:50px;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;z-index:210}
+.overlay-close:hover{transform:scale(1.1);background:#333333}
 
-.overlay-close:hover {
-  transform: scale(1.3);   
-  background: #f4511e;    
-}
-
-.ov-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
-.ov-label::before{content:'';display:block;width:24px;height:1px;background:var(--ember)}
-.ov-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95;margin-bottom:1.75rem}
+.ov-label{font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.ov-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+.ov-title{font-family:-apple-system,system-ui,'Helvetica Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95;margin-bottom:1.75rem}
 
 /* CAROUSEL */
 .carousel{position:relative;margin-bottom:2.5rem}
 .carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;cursor:grab}
 .carousel-track::-webkit-scrollbar{display:none}
 .carousel-track.dragging{cursor:grabbing;user-select:none}
-.carousel-slide {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
-  /* 1. Change or remove aspect-ratio to let the image dictate height */
-  height: 70vh; /* Adjust this value to your preferred viewing height */
-  border-radius: 6px;
-  overflow: hidden;
-  background: var(--bg);
-  position: relative;
-}
-
-.carousel-slide img {
-  width: 100%;
-  height: 100%;
-  /* 2. Change 'cover' to 'contain' to see the whole image */
-  object-fit: contain; 
-  display: block;
-  transition: filter 0.5s;
-}
-.carousel-slide:hover img{filter:grayscale(0%)}
+.carousel-slide{flex:0 0 100%;scroll-snap-align:start;height:70vh;border-radius:6px;overflow:hidden;background:var(--surface2);position:relative}
+.carousel-slide img{width:100%;height:100%;object-fit:contain;display:block;transition:filter 0.5s}
 .carousel-dots{display:flex;justify-content:center;gap:6px;margin-top:1rem}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--border2);border:none;cursor:pointer;transition:background 0.2s,transform 0.2s;padding:0}
-.dot.active{background:var(--ember);transform:scale(1.3)}
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: #ff7043; /* Your orange */
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  opacity: 0.8;
-}
-
-.carousel-nav:hover {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.2); /* 20% growth */
-}
-
-.carousel-nav.prev { left: 1rem; }
-.carousel-nav.next { right: 1rem; }
-
-/* Hide arrows if there's only one image */
-.carousel-track:only-child ~ .carousel-nav {
-  display: none;
-}
+.dot.active{background:var(--accent);transform:scale(1.3)}
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:#000000;color:white;border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:0.8}
+.carousel-nav:hover{opacity:1;transform:translateY(-50%) scale(1.1)}
+.carousel-nav.prev{left:1rem}
+.carousel-nav.next{right:1rem}
 
 /* VIDEO */
 .video-wrap{aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:var(--surface2);margin-bottom:1.5rem}
@@ -182,33 +114,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 /* META GRID */
 .ov-meta-grid{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2.5rem}
 .ov-meta-cell{background:var(--surface);padding:1rem 1.25rem}
-.ov-meta-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--smoke);margin-bottom:4px}
+.ov-meta-label{font-family:system-ui,sans-serif;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--smoke);margin-bottom:4px}
 .ov-meta-value{font-size:0.9rem;color:var(--ash)}
 
 /* DESCRIPTION */
 .ov-desc{font-size:1rem;color:var(--ash);line-height:1.8;font-weight:300;margin-bottom:2.5rem;max-width:680px}
 
 /* SECTION LABEL */
-.ov-section-label{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
-.ov-section-label::before{content:'';display:block;width:18px;height:1px;background:var(--ember)}
+.ov-section-label{font-family:system-ui,sans-serif;font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.ov-section-label::before{content:'';display:block;width:18px;height:1px;background:var(--accent)}
 
 /* CREDITS */
 .credits-list{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2.5rem}
 .credit-row{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1.25rem;background:var(--surface);border-bottom:1px solid var(--border)}
 .credit-row:last-child{border-bottom:none}
-.credit-role{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--smoke)}
+.credit-role{font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--smoke)}
 .credit-name{font-size:0.9rem;color:var(--ash)}
 
 /* LINKS */
 .ov-links{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem}
-.ov-link{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);text-decoration:none;border:1px solid var(--ember);border-radius:3px;padding:10px 20px;transition:background 0.2s,color 0.2s}
-.ov-link:hover{background:var(--ember);color:var(--white)}
+.ov-link{display:inline-flex;align-items:center;gap:8px;font-family:system-ui,sans-serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:3px;padding:10px 20px;transition:background 0.2s,color 0.2s}
+.ov-link:hover{background:var(--accent);color:#ffffff}
+
+/* FOOTER */
+footer{position:relative;z-index:1;padding:1.5rem 3rem;font-family:system-ui,sans-serif;font-size:0.68rem;letter-spacing:0.1em;color:var(--smoke);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+footer a{color:var(--smoke);text-decoration:none;transition:color 0.2s}
+footer a:hover{color:var(--ember)}
 
 @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:700px){
   nav{padding:1rem 1.25rem}
-  .page-header,.filter-bar,.project-grid{padding-left:1.25rem;padding-right:1.25rem}
+  .page-header,.lang-bar,.filter-bar,.project-grid{padding-left:1.25rem;padding-right:1.25rem}
   .project-grid{grid-template-columns:1fr}
   .overlay-inner{padding:5rem 1.25rem 3rem}
 }
@@ -217,7 +154,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <body>
 
 <nav>
-  <!-- TODO: Replace with your name -->
   <a href="../index.html" class="nav-logo">enrique<em>camou</em></a>
   <div class="nav-right">
     <a href="../index.html" class="nav-back">&#x2190; Home</a>
@@ -227,13 +163,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 <header class="page-header">
   <div class="page-label">Coding</div>
-  <h1 class="page-title">Recent<br><em>projects</em></h1>
+  <h1 class="page-title">Recent<br><em>Projects</em></h1>
 </header>
 
+<!-- Languages -->
+<div class="lang-bar" id="langBar"></div>
+
 <!-- Filter buttons injected by JS -->
-<div class="filter-bar" id="filterBar">
-        <h1>Java java java </h1>
-</div>
+<div class="filter-bar" id="filterBar"></div>
 
 <!-- Project cards injected by JS -->
 <div class="project-grid" id="grid"></div>
@@ -242,28 +179,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <div class="overlay" id="overlay">
   <div class="overlay-inner">
     <button class="overlay-close" id="overlayClose">&#x2715;&nbsp; Close</button>
-    <div class="ov-label"   id="ovLabel"></div>
-    <h2  class="ov-title"   id="ovTitle"></h2>
+    <div class="ov-label" id="ovLabel"></div>
+    <h2 class="ov-title" id="ovTitle"></h2>
     <div id="ovVideo"></div>
-    <div class="carousel"   id="ovCarousel" style="display:none">
+    <div class="carousel" id="ovCarousel" style="display:none">
       <div class="carousel-track" id="ovTrack"></div>
-      <div class="carousel-dots"  id="ovDots"></div>
+      <div class="carousel-dots" id="ovDots"></div>
       <button class="carousel-nav prev" id="prevBtn">&#x2190;</button>
-  
-      <div class="carousel-track" id="carouselTrack">
-        </div>
       <button class="carousel-nav next" id="nextBtn">&#x2192;</button>
-      
-      <div class="carousel-dots" id="carouselDots"></div>
     </div>
     <div class="ov-meta-grid" id="ovMeta"></div>
-    <p   class="ov-desc"    id="ovDesc"></p>
+    <p class="ov-desc" id="ovDesc"></p>
     <div id="ovCredits"></div>
-    <div class="ov-links"   id="ovLinks"></div>
+    <div class="ov-links" id="ovLinks"></div>
   </div>
 </div>
 
 <script>
+/* ================================================================
+   LANGUAGES — displayed as tags below the header
+   ================================================================ */
+const languages = ["JavaScript", "HTML / CSS", "Python", "Java", "Swift", "SQL"];
+
 /* ================================================================
    PROJECT DATA ARRAY
    ──────────────────────────────────────────────────────────────
@@ -272,56 +209,143 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
    REQUIRED fields:
      id          unique slug, no spaces            e.g. "my-project"
-     type        must match a filter value below   e.g. "photo"
-     badge       label on the card thumbnail       e.g. "Photography"
+     type        must match a filter value below   e.g. "web"
+     badge       label on the card thumbnail       e.g. "Web App"
      year        string                            e.g. "2024"
-     category    shown next to year on card        e.g. "Series"
+     category    shown next to year on card        e.g. "Full Stack"
      title       card + overlay headline
      description 1-2 sentence card summary
      client      shown in card footer
+     stack       array of tech labels shown on thumbnail
 
    OPTIONAL fields (omit or set to null to hide):
-     thumbnail        path to card image           e.g. "../images/thumb.jpg"
+     thumbnail        path to card image
      fullDescription  longer overlay paragraph
      meta             object — any key:value pairs shown in meta grid
      images           array of image paths for carousel
-     video            YouTube or Vimeo embed URL   e.g. "https://www.youtube.com/embed/ID"
+     video            full <iframe> embed HTML string
      credits          array of { role, name }
      links            array of { label, url }
-                      suggested labels: "Watch on YouTube", "Watch on Vimeo",
-                      "GitHub Repo", "Live Site", "Behance", "Instagram",
-                      "Client Website", "Press Article"
+                      suggested labels: "GitHub Repo", "Live Site",
+                      "Demo Video", "App Store"
    ================================================================ */
 const projects = [
-{
-    id: "project1",
-    type: "coding",
-    badge: "HTML",
-    year: "2026",
-    category: "Educational",
-    title: "Wheelchair Basketball: Rules of the Game",
-    description: "Official rules explainer for the 2026 National Championships at McKale Center.",
-    client: "University of Arizona | National Wheelchair Basketball Association (NWBA)",
-    thumbnail: "/images/rules/rules2.png",
-    fullDescription: "Produced and edited a comprehensive rules guide for the 2026 National Championships. Collaborated with athletes from both Men's and Women's teams and consulted with coaching staff to ensure technical accuracy. The video followed strict tournament style guidelines and played during every game of the championship.",
+  {
+    id: "movie-rater",
+    type: "web",
+    badge: "Web App",
+    year: "2025",
+    category: "Full Stack",
+    title: "Movie Rating Website",
+    description: "A full-stack movie rating platform where users can discover, rate, and review films.",
+    client: "Personal Project",
+    stack: ["JavaScript", "Tailwind", "Supabase", "SQL"],
+    fullDescription: "A full-stack movie rating website built with Vercel for deployment and CSS Tailwind for styling. Integrates Supabase as the backend with a SQL database for user data, ratings, and reviews. Pulls movie metadata through external APIs. Currently in active development with core rating and discovery features built out.",
     meta: {
-      "Year": "2026",
-      "Event": "National Championship",
-      "Role": "Lead Editor / Researcher"
+      "Status": "In Progress",
+      "Deployment": "Vercel",
+      "Database": "Supabase / SQL"
     },
-    images: [
-    "/images/rules/rules1.png",
-    "/images/rules/rules2.png",
-    "/images/rules/rules3.png",
-    "/images/rules/rules4.png",
-    "/images/rules/rules5.png",
-    ],
-      video: "",
     credits: [
-      { role: "Video Editor", name: "Enrique Camou Villa" }
+      { role: "Developer", name: "Enrique Camou Villa" }
+    ]
+  },
+  {
+    id: "adoption-site",
+    type: "web",
+    badge: "Web App",
+    year: "2025",
+    category: "Full Stack",
+    title: "Pet Adoption Platform",
+    description: "A full website for adoption rating and pet discovery, built with a Node.js backend and MongoDB.",
+    client: "Personal Project",
+    stack: ["HTML", "JavaScript", "Node.js", "MongoDB"],
+    fullDescription: "A full-featured website designed for adoption rating purposes. Users can browse listings, submit ratings, and interact with adoption profiles. Built with vanilla HTML and JavaScript on the frontend, a Node.js server handling routing and API logic, and MongoDB as the database for flexible document storage.",
+    meta: {
+      "Status": "In Progress",
+      "Backend": "Node.js",
+      "Database": "MongoDB"
+    },
+    credits: [
+      { role: "Developer", name: "Enrique Camou Villa" }
+    ]
+  },
+  {
+    id: "workout-app",
+    type: "mobile",
+    badge: "iOS App",
+    year: "2025",
+    category: "Mobile",
+    title: "Workout Logger App",
+    description: "An iOS app skeleton inspired by Strava — users can log, rate, and share workout routines.",
+    client: "Personal Project",
+    stack: ["Swift"],
+    fullDescription: "Early-stage iOS application built with Swift. Designed around a social fitness concept where users can log personal workout routines, assign ratings, and share them with others — similar in spirit to Strava. The current build includes the core navigation skeleton, initial UI screens, and data model scaffolding.",
+    meta: {
+      "Status": "In Progress",
+      "Platform": "iOS",
+      "Language": "Swift"
+    },
+    credits: [
+      { role: "Developer", name: "Enrique Camou Villa" }
+    ]
+  },
+  {
+    id: "chess-1d",
+    type: "python",
+    badge: "Python",
+    year: "2024",
+    category: "Class Project",
+    title: "1D Chess",
+    description: "A command-line implementation of 1D chess — a linear variant of chess played on a single row.",
+    client: "University of Arizona",
+    stack: ["Python"],
+    fullDescription: "A class project implementing 1D Chess, a simplified chess variant played on a single row. Built entirely in Python with command-line interaction. Covers core object-oriented design principles including class inheritance, move validation logic, turn management, and win condition detection.",
+    meta: {
+      "Status": "Complete",
+      "Language": "Python",
+      "Type": "CLI Game"
+    },
+    credits: [
+      { role: "Developer", name: "Enrique Camou Villa" }
     ]
   }
 ];
+
+/* ================================================================
+   FILTER CONFIG
+   ================================================================ */
+const filters = [
+  { label: "All",    value: "all" },
+  { label: "Web",    value: "web" },
+  { label: "Python", value: "python" },
+  { label: "Mobile", value: "mobile" },
+];
+
+/* ── render language tags ── */
+const langBar = document.getElementById("langBar");
+languages.forEach(lang => {
+  const tag = document.createElement("span");
+  tag.className = "lang-tag";
+  tag.textContent = lang;
+  langBar.appendChild(tag);
+});
+
+/* ── render filter bar ── */
+const filterBar = document.getElementById("filterBar");
+filters.forEach((f, i) => {
+  const btn = document.createElement("button");
+  btn.className = "filter-btn" + (i === 0 ? " active" : "");
+  btn.textContent = f.label;
+  btn.onclick = () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".project-door").forEach(d => {
+      d.style.display = (f.value === "all" || d.dataset.type === f.value) ? "block" : "none";
+    });
+  };
+  filterBar.appendChild(btn);
+});
 
 /* ── render project grid ── */
 const grid = document.getElementById("grid");
@@ -329,7 +353,8 @@ projects.forEach((p, i) => {
   const hasVideo = !!p.video;
   const thumb = p.thumbnail
     ? `<img src="${p.thumbnail}" alt="${p.title}"/>`
-    : `<div class="door-thumb-placeholder">[ thumbnail ]</div>`;
+    : `<div class="door-thumb-placeholder">[ no preview ]</div>`;
+  const stackTags = (p.stack || []).map(s => `<span class="stack-tag">${s}</span>`).join("");
   const playBtn = hasVideo
     ? `<div class="door-play"><div class="play-circle"><div class="play-triangle"></div></div></div>`
     : "";
@@ -343,13 +368,14 @@ projects.forEach((p, i) => {
       ${thumb}
       <div class="door-badge">${p.badge}</div>
       ${playBtn}
+      <div class="door-stack">${stackTags}</div>
     </div>
     <div class="door-body">
       <div class="door-meta">${p.year} &mdash; ${p.category}</div>
       <div class="door-title">${p.title}</div>
       <div class="door-desc">${p.description}</div>
       <div class="door-footer">
-        <div class="door-client">Client: <span>${p.client}</span></div>
+        <div class="door-client">Project: <span>${p.client}</span></div>
         <span class="door-arrow">&#x2192;</span>
       </div>
     </div>`;
@@ -361,24 +387,18 @@ function openOverlay(id) {
   const p = projects.find(x => x.id === id);
   if (!p) return;
 
-  /* label */
   document.getElementById("ovLabel").textContent = `${p.badge} — ${p.year}`;
 
-  /* title: last word italicised */
   const words = p.title.split(" ");
-  const last  = words.pop();
+  const last = words.pop();
   document.getElementById("ovTitle").innerHTML =
     (words.length ? words.join(" ") + " " : "") + `<em>${last}</em>`;
 
-  /* video */
   const ovVideo = document.getElementById("ovVideo");
   ovVideo.innerHTML = p.video
-    ? `<div class="video-wrap" style="margin-bottom:1.5rem">
-         <iframe src="${p.video}" allowfullscreen loading="lazy"></iframe>
-       </div>`
+    ? `<div class="video-wrap" style="margin-bottom:1.5rem">${p.video}</div>`
     : "";
 
-  /* carousel */
   const imgs     = (p.images || []).filter(Boolean);
   const carousel = document.getElementById("ovCarousel");
   const track    = document.getElementById("ovTrack");
@@ -392,10 +412,9 @@ function openOverlay(id) {
   } else {
     carousel.style.display = "none";
     track.innerHTML = "";
-    dots.innerHTML  = "";
+    dots.innerHTML = "";
   }
 
-  /* meta grid */
   const meta     = p.meta || {};
   const metaKeys = Object.keys(meta);
   const ovMeta   = document.getElementById("ovMeta");
@@ -412,16 +431,14 @@ function openOverlay(id) {
     ovMeta.style.display = "none";
   }
 
-  /* description */
   const ovDesc = document.getElementById("ovDesc");
   if (p.fullDescription) {
-    ovDesc.textContent  = p.fullDescription;
+    ovDesc.textContent = p.fullDescription;
     ovDesc.style.display = "block";
   } else {
     ovDesc.style.display = "none";
   }
 
-  /* credits */
   const ovCredits = document.getElementById("ovCredits");
   if (p.credits && p.credits.length) {
     ovCredits.innerHTML = `
@@ -438,10 +455,9 @@ function openOverlay(id) {
     ovCredits.innerHTML = "";
   }
 
-  /* links */
   const ovLinks = document.getElementById("ovLinks");
   if (p.links && p.links.length) {
-    ovLinks.innerHTML    = p.links.map(l =>
+    ovLinks.innerHTML = p.links.map(l =>
       `<a href="${l.url}" target="_blank" rel="noopener" class="ov-link">${l.label} &#x2197;</a>`
     ).join("");
     ovLinks.style.display = "flex";
@@ -449,7 +465,6 @@ function openOverlay(id) {
     ovLinks.style.display = "none";
   }
 
-  /* open */
   const overlay = document.getElementById("overlay");
   overlay.classList.add("open");
   overlay.scrollTop = 0;
@@ -474,34 +489,38 @@ function initCarousel(track, dotsEl) {
   const nextBtn = document.getElementById("nextBtn");
 
   if (slides.length <= 1) {
-    if(prevBtn) prevBtn.style.display = "none";
-    if(nextBtn) nextBtn.style.display = "none";
-    // ... rest of your single-slide logic
+    if (prevBtn) prevBtn.style.display = "none";
+    if (nextBtn) nextBtn.style.display = "none";
     return;
   }
 
-  // Next Button Logic
-  nextBtn.onclick = () => {
-    track.scrollBy({ left: track.offsetWidth, behavior: 'smooth' });
-  };
+  let currentIdx = 0;
 
-  // Previous Button Logic
-  prevBtn.onclick = () => {
-    track.scrollBy({ left: -track.offsetWidth, behavior: 'smooth' });
-  };
+  function goTo(idx) {
+    currentIdx = (idx + slides.length) % slides.length;
+    track.scrollTo({ left: track.offsetWidth * currentIdx, behavior: "smooth" });
+    dotsEl.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("active", i === currentIdx));
+  }
+
+  nextBtn.style.display = "";
+  prevBtn.style.display = "";
+  nextBtn.onclick = () => goTo(currentIdx + 1);
+  prevBtn.onclick = () => goTo(currentIdx - 1);
+
   dotsEl.innerHTML = "";
-  if (slides.length <= 1) { dotsEl.style.display = "none"; return; }
   dotsEl.style.display = "flex";
   slides.forEach((_, i) => {
     const d = document.createElement("button");
     d.className = "dot" + (i === 0 ? " active" : "");
-    d.onclick = () => track.scrollTo({ left: track.offsetWidth * i, behavior: "smooth" });
+    d.onclick = () => goTo(i);
     dotsEl.appendChild(d);
   });
+
   track.addEventListener("scroll", () => {
-    const idx = Math.round(track.scrollLeft / track.offsetWidth);
-    dotsEl.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("active", i === idx));
+    currentIdx = Math.round(track.scrollLeft / track.offsetWidth);
+    dotsEl.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("active", i === currentIdx));
   }, { passive: true });
+
   let isDown = false, startX, scrollL;
   track.addEventListener("mousedown", e => {
     isDown = true; track.classList.add("dragging");
@@ -515,7 +534,12 @@ function initCarousel(track, dotsEl) {
     track.scrollLeft = scrollL - (e.pageX - track.offsetLeft - startX) * 1.2;
   });
 }
-
 </script>
+
+<footer>
+  <span>&copy; 2026 Enrique Camou Villa</span>
+  <a href="contact.html">Contact</a>
+</footer>
+
 </body>
 </html>
