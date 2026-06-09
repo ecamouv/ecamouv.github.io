@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Coding - Enrique Camou Villa</title>
+<link rel="stylesheet" href="style.css" media="all"/>
+<style>
+  /* Extra modular layout helpers specific to Code items missing from global style.css */
+  .lang-bar {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .lang-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.15);
+    color: var(--smoke);
+  }
+  .filter-bar {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover {
+    border-color: var(--smoke);
+    color: var(--ash);
+  }
+  .filter-btn.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--ash);
+  }
+  .door-stack {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    z-index: 10;
+  }
+  .stack-tag {
+    font-size: 0.54rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: rgba(26, 1, 1, 0.88);
+    border: 1px solid rgba(255, 202, 208, 0.15);
+    color: var(--smoke);
+    padding: 2px 6px;
+    border-radius: 2px;
+    backdrop-filter: blur(4px);
+  }
+  .banner-links-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 1.5rem;
+  }
+  .banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ash);
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    padding: 8px 16px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .banner-link:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--ash);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">enrique<em>camou</em></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">&#x2190; Home</a>
+    <a href="contact.html" class="nav-contact">Contact</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-label">Coding</div>
+  <h1 class="page-title">Recent<br><em>Projects</em></h1>
+</header>
+
+<div class="lang-bar" id="langBar"></div>
+
+<div class="filter-bar" id="filterBar"></div>
+
+<div class="project-grid" id="grid"></div>
+
+<script>
+const languages = ["JavaScript", "HTML / CSS", "Python", "Java", "Swift", "SQL"];
+
+const projects = [
+  {
+    id: "movie-rater",
+    type: "web",
+    badge: "Web App",
+    year: "2025",
+    category: "Full Stack",
+    title: "Movie Rating Website",
+    description: "A full-stack movie rating platform where users can discover, rate, and review films.",
+    client: "Personal Project",
+    stack: ["JavaScript", "Tailwind", "Supabase", "SQL"],
+    fullDescription: "A full-stack movie rating website built with Vercel for deployment and CSS Tailwind for styling. Integrates Supabase as the backend with a SQL database for user data, ratings, and reviews. Pulls movie metadata through external APIs. Currently in active development with core rating and discovery features built out.",
+    meta: {
+      "Status": "In Progress",
+      "Deployment": "Vercel",
+      "Database": "Supabase / SQL"
+    },
+    credits: [
+      { role: "Developer", name: "Enrique Camou Villa" }
+    ],
+    links: [
+      { label: "GitHub Repo", url: "https://github.com" }
+    ]
+  },
+  {
+    id: "adoption-site",
+    type: "web",
+    badge: "Web App",
+    year: "2025",
+    category: "Full Stack",
+    title: "Pet Adoption Platform",
+    description: "A full website for adoption rating and pet discovery, built with a Node.js backend and MongoDB.",
+    client: "Personal Project",
+    stack: ["HTML", "JavaScript", "Node.js", "MongoDB"],
+    fullDescription: "A full-featured website designed for adoption rating purposes. Users can browse listings, submit ratings, and interact with adoption profiles. Built with vanilla HTML and JavaScript on the frontend, a Node.js server handling routing and API logic, and MongoDB as the database for flexible document storage.",
+    meta: {
+      "Status": "In Progress",
+      "Backend": "Node.js",
+      "Database": "MongoDB"
+    },
+    credits: [
+      { role: "Developer", name: "Enrique Camou Villa" }
+    ],
+    links: [
+      { label: "GitHub Repo", url: "https://github.com" }
+    ]
+  },
+  {
+    id: "workout-app",
+    type: "mobile",
+    badge: "iOS App",
+    year: "2025",
+    category: "Mobile",
+    title: "Workout Logger App",
+    description: "An iOS app skeleton inspired by Strava — users can log, rate, and share workout routines.",
+    client: "Personal Project",
+    stack: ["Swift"],
+    fullDescription: "Early-stage iOS application built with Swift. Designed around a social fitness concept where users can log personal workout routines, assign ratings, and share them with others — similar in spirit to Strava. The current build includes the core navigation skeleton, initial UI screens, and data model scaffolding.",
+    meta: {
+      "Status": "In Progress",
+      "Platform": "iOS",
+      "Language": "Swift"
+    },
+    credits: [
+      { role: "Developer", name: "Enrique Camou Villa" }
+    ],
+    links: [
+      { label: "GitHub Repo", url: "https://github.com" }
+    ]
+  },
+  {
+    id: "chess-1d",
+    type: "python",
+    badge: "Python",
+    year: "2024",
+    category: "Class Project",
+    title: "1D Chess",
+    description: "A command-line implementation of 1D chess — a linear variant of chess played on a single row.",
+    client: "University of Arizona",
+    stack: ["Python"],
+    fullDescription: "A class project implementing 1D Chess, a simplified chess variant played on a single row. Built entirely in Python with command-line interaction. Covers core object-oriented design principles including class inheritance, move validation logic, turn management, and win condition detection.",
+    meta: {
+      "Status": "Complete",
+      "Language": "Python",
+      "Type": "CLI Game"
+    },
+    credits: [
+      { role: "Developer", name: "Enrique Camou Villa" }
+    ],
+    links: [
+      { label: "GitHub Repo", url: "https://github.com" }
+    ]
+  }
+];
+
+const filters = [
+  { label: "All",    value: "all" },
+  { label: "Web",    value: "web" },
+  { label: "Python", value: "python" },
+  { label: "Mobile", value: "mobile" },
+];
+
+/* ── Render language tags ── */
+const langBar = document.getElementById("langBar");
+languages.forEach(lang => {
+  const tag = document.createElement("span");
+  tag.className = "lang-tag";
+  tag.textContent = lang;
+  langBar.appendChild(tag);
+});
+
+/* ── Close all items helper ── */
+function closeAllDoors() {
+  document.querySelectorAll(".project-door").forEach(d => d.classList.remove("active"));
+}
+
+/* ── Render filter bar ── */
+const filterBar = document.getElementById("filterBar");
+filters.forEach((f, i) => {
+  const btn = document.createElement("button");
+  btn.className = "filter-btn" + (i === 0 ? " active" : "");
+  btn.textContent = f.label;
+  btn.onclick = () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    closeAllDoors();
+    
+    let visibleIdx = 0;
+    document.querySelectorAll(".project-door").forEach(d => {
+      const isVisible = (f.value === "all" || d.dataset.type === f.value);
+      d.style.display = isVisible ? "grid" : "none";
+      
+      if (isVisible) {
+        // Re-calculate column mappings cleanly after filters compress rows
+        d.classList.remove("col-left", "col-mid", "col-right");
+        const colPosition = visibleIdx % 3;
+        if (colPosition === 0) d.classList.add("col-left");
+        else if (colPosition === 1) d.classList.add("col-mid");
+        else d.classList.add("col-right");
+        visibleIdx++;
+      }
+    });
+  };
+  filterBar.appendChild(btn);
+});
+
+/* ── Render project grid ── */
+const grid = document.getElementById("grid");
+projects.forEach((p, i) => {
+  const thumbHtml = p.thumbnail
+    ? `<img src="${p.thumbnail}" alt="${p.title}"/>`
+    : `<div class="door-thumb-placeholder" style="display:flex;align-items:center;justify-content:center;height:100%;font-size:0.6rem;letter-spacing:0.05em;color:var(--dim);">[ NO PREVIEW AVAIL ]</div>`;
+  
+  const stackTags = (p.stack || []).map(s => `<span class="stack-tag">${s}</span>`).join("");
+  
+  let creditsHtml = "";
+  if (p.credits && p.credits.length) {
+    creditsHtml = `
+      <div class="banner-section-title">Credits</div>
+      <div class="inline-credits-list">
+        ${p.credits.map(c => `
+          <div class="inline-credit-row">
+            <span class="inline-role">${c.role}:</span>
+            <span class="inline-name">${c.name}</span>
+          </div>
+        `).join("")}
+      </div>`;
+  }
+
+  let metaHtml = "";
+  if (p.meta) {
+    metaHtml = `
+      <div class="banner-section-title">Specifications</div>
+      <div class="inline-credits-list" style="border-left-color: var(--dim); background: rgba(0,0,0,0.15);">
+        ${Object.keys(p.meta).map(k => `
+          <div class="inline-credit-row">
+            <span class="inline-role">${k}:</span>
+            <span class="inline-name">${p.meta[k]}</span>
+          </div>
+        `).join("")}
+      </div>`;
+  }
+
+  let linksHtml = "";
+  if (p.links && p.links.length) {
+    linksHtml = `
+      <div class="banner-links-wrapper">
+        ${p.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener" class="banner-link">${l.label} &#x2197;</a>`).join("")}
+      </div>`;
+  }
+
+  const card = document.createElement("div");
+  card.className = "project-door";
+  card.dataset.type = p.type;
+  card.style.animationDelay = `${0.05 + i * 0.07}s`;
+  
+  // Set up desktop column calculation markers expected by style.css rules
+  const colPosition = i % 3;
+  if (colPosition === 0) card.classList.add("col-left");
+  else if (colPosition === 1) card.classList.add("col-mid");
+  else card.classList.add("col-right");
+
+  card.innerHTML = `
+    <div class="door-thumb">
+      ${thumbHtml}
+      <div class="door-badge">${p.badge}</div>
+      <div class="door-hover-title">
+        <small>${p.category}</small>
+        <span>${p.title}</span>
+      </div>
+      <div class="door-stack">${stackTags}</div>
+    </div>
+    
+    <div class="door-details-banner">
+      <div class="banner-header">
+        <span class="banner-meta">${p.year} &mdash; ${p.category}</span>
+        <h2 class="banner-title">${p.title}</h2>
+        <div class="banner-client">Project: <span>${p.client}</span></div>
+      </div>
+      <p class="banner-desc">${p.fullDescription || p.description}</p>
+      
+      ${metaHtml}
+      ${creditsHtml}
+      ${linksHtml}
+      
+      <button class="banner-close-btn">Close Project</button>
+    </div>
+  `;
+
+  // Intercept events to execute inline expansion without jumping page behaviors
+  card.addEventListener("click", (e) => {
+    if (e.target.closest(".banner-close-btn")) {
+      e.stopPropagation();
+      card.classList.remove("active");
+      return;
+    }
+    if (e.target.closest("a") || e.target.closest(".banner-links-wrapper")) {
+      return; // Do not toggle if actual links inside are interacted with
+    }
+    
+    if (card.classList.contains("active")) {
+      if (e.target.closest(".door-thumb")) {
+        card.classList.remove("active");
+      }
+    } else {
+      closeAllDoors();
+      card.classList.add("active");
+      setTimeout(() => {
+        card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 100);
+    }
+  });
+
+  grid.appendChild(card);
+});
+</script>
+
+<footer>
+  <span>&copy; 2026 Enrique Camou Villa</span>
+  <a href="contact.html">Contact</a>
+</footer>
+
+</body>
+</html>

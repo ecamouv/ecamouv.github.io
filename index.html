@@ -4,61 +4,123 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Enrique Camou Villa — Portfolio</title>
+<link rel="stylesheet" href="style.css" media="all"/>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#ffffff;
-  --surface:#f5f5f5;
-  --surface2:#ececec;
-  --border:#d8d8d8;
-  --border2:#b0b0b0;
-  --accent:#000000;
-  --ember:#d95a2b;
-  --ash:#555555;
-  --smoke:#888888;
-  --white:#000000;
-}
-html,body{height:100%}
-body{background:var(--bg);color:var(--white);font-family:-apple-system,system-ui,'Helvetica Neue',sans-serif;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column}
+  /* Landing page architecture extending style.css variables */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 9rem 2rem 4rem;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .identity {
+    margin-bottom: 4.5rem;
+    animation: up 0.8s ease both;
+  }
+  .name {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2.8rem, 6.5vw, 4.8rem);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--ash);
+    margin-top: 0.5rem;
+  }
+  .tagline {
+    font-size: 0.75rem;
+    color: var(--smoke);
+    margin-top: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .doors-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    animation: up 0.8s ease both;
+    animation-delay: 0.15s;
+  }
+  .portal-door {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 3rem 2.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ash);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 300px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.3s, 
+                box-shadow 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .portal-door::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 100% 100%, rgba(241,2,34,0.08) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .portal-door:hover {
+    transform: translateY(-5px);
+    border-color: var(--border2);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.6);
+  }
+  .portal-door:hover::after {
+    opacity: 1;
+  }
+  .door-number {
+    font-size: 0.7rem;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  .door-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    line-height: 1.1;
+    color: var(--ash);
+    font-weight: 400;
+  }
+  .door-sub {
+    font-size: 0.72rem;
+    color: var(--smoke);
+    margin-top: 0.6rem;
+    font-family: 'DM Mono', monospace;
+  }
+  .door-enter {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--dim);
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+  .portal-door:hover .door-enter {
+    color: var(--ash);
+  }
+  .door-enter span {
+    transition: transform 0.2s;
+  }
+  .portal-door:hover .door-enter span {
+    transform: translateX(5px);
+  }
 
-/* LAYOUT */
-main{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:center;padding:3rem}
-
-/* IDENTITY */
-.identity{margin-bottom:4rem;animation:up 0.8s ease both}
-.page-label{font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;display:flex;align-items:center;gap:10px}
-.page-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
-.name{font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:0.92;letter-spacing:-0.04em;margin-bottom:1.1rem}
-.tagline{font-size:1rem;font-family:system-ui,sans-serif;letter-spacing:0.14em;text-transform:uppercase;font-weight:800}
-
-/* DOORS */
-.doors{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:780px;animation:up 0.8s 0.2s ease both}
-.door{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:2rem 2rem 1.75rem;text-decoration:none;display:block;transition:border-color 0.35s,transform 0.35s}
-.door::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(217,90,43,0.08) 0%,transparent 65%);opacity:0;transition:opacity 0.35s}
-.door:hover{border-color:var(--ember);transform:translateY(-4px)}
-.door:hover::before{opacity:1}
-
-.door-number{font-family:system-ui,sans-serif;font-size:0.65rem;letter-spacing:0.16em;color:var(--border2);margin-bottom:1.5rem;display:block;transition:color 0.3s}
-.door:hover .door-number{color:var(--ember)}
-
-.door-title{font-size:1.6rem;font-weight:900;letter-spacing:-0.02em;color:var(--white);line-height:1.1;margin-bottom:0.5rem}
-.door-sub{font-size:0.78rem;font-family:system-ui,sans-serif;letter-spacing:0.08em;color:var(--smoke);line-height:1.5;margin-bottom:1.75rem}
-
-.door-enter{display:inline-flex;align-items:center;gap:8px;font-size:0.78rem;font-weight:500;letter-spacing:0.06em;color:var(--ash);transition:color 0.3s,gap 0.3s}
-.door:hover .door-enter{color:var(--ember);gap:12px}
-
-/* FOOTER */
-footer{position:relative;z-index:1;padding:1.5rem 3rem;font-family:system-ui,sans-serif;font-size:0.68rem;letter-spacing:0.1em;color:var(--smoke);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
-footer a{color:var(--smoke);text-decoration:none;transition:color 0.2s}
-footer a:hover{color:var(--ember)}
-
-@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-
-@media(max-width:600px){
-  main{padding:2rem 1.25rem;padding-top:5rem}
-  .doors{grid-template-columns:1fr}
-  footer{padding:1.5rem 1.25rem}
-}
+  @media (max-width: 768px) {
+    main { padding-top: 6rem; }
+    .doors-container { grid-template-columns: 1fr; gap: 1rem; }
+    .portal-door { min-height: 220px; padding: 2rem; }
+  }
 </style>
 </head>
 <body>
@@ -66,23 +128,27 @@ footer a:hover{color:var(--ember)}
 <main>
   <div class="identity">
     <div class="page-label">Portfolio</div>
-    <h1 class="name">Enrique Camou Villa<br></h1>
-    <p class="tagline">Choose a portfolio</p>
+    <h1 class="name">Enrique Camou Villa</h1>
+    <p class="tagline">Select a pathway to explore recent works</p>
   </div>
-
-  <div class="doors">
-    <a href="film/portfolio.html" class="door">
-      <span class="door-number">01 &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</span>
-      <div class="door-title">Video &amp;<br>Photography</div>
-      <div class="door-sub">Creative Content Portfolio</div>
-      <div class="door-enter">Enter <span>&#x2192;</span></div>
+  
+  <div class="doors-container">
+    <a href="video-portfolio.html" class="portal-door">
+      <div>
+        <span class="door-number">01 &mdash;&mdash;&mdash;&mdash;</span>
+        <div class="door-title">Video &amp;<br>Photography</div>
+        <div class="door-sub">Creative Content Portfolio</div>
+      </div>
+      <div class="door-enter">See Portfolio <span>&#x2192;</span></div>
     </a>
 
-    <a href="code/portfolio.html" class="door">
-      <span class="door-number">02 &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</span>
-      <div class="door-title">Coding</div>
-      <div class="door-sub">Junior Full Stack &middot; Frontend</div>
-      <div class="door-enter">Enter <span>&#x2192;</span></div>
+    <a href="code-portfolio.html" class="portal-door">
+      <div>
+        <span class="door-number">02 &mdash;&mdash;&mdash;&mdash;</span>
+        <div class="door-title">Coding &amp;<br>Development</div>
+        <div class="door-sub">Full Stack &middot; Frontend Systems</div>
+      </div>
+      <div class="door-enter">See Portfolio <span>&#x2192;</span></div>
     </a>
   </div>
 </main>
