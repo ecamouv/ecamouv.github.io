@@ -153,22 +153,37 @@ const projects = [
 
 const grid = document.getElementById("grid");
 
-function getColCount() {
-  const gridWidth = grid.offsetWidth;
-  if (gridWidth >= 900) return 3;
-  if (gridWidth >= 600) return 2;
-  return 1;
+// ---------------------------------------------------------------------
+// Editorial index: full-width numbered rows, image + title + meta always
+// visible (no hover-gated info, so it reads the same on touch devices),
+// click expands an inline dossier panel. Row background/text flip from
+// cream to charcoal on hover/active — the brand's cream:black ratio
+// performed as motion.
+// ---------------------------------------------------------------------
+
+function isInstagramUrl(url) {
+  return /instagram\.com/i.test(url);
 }
 
-function assignColClasses(cards) {
-  const cols = getColCount();
-  cards.forEach((card, idx) => {
-    card.classList.remove("col-left", "col-mid", "col-right");
-    const pos = idx % cols;
-    if (cols === 1 || pos === 0) card.classList.add("col-left");
-    else if (pos === cols - 1) card.classList.add("col-right");
-    else card.classList.add("col-mid");
-  });
+function buildEmbedCarousel(videoUrls) {
+  if (!videoUrls || !videoUrls.length) return "";
+
+  const items = videoUrls.map(url => {
+    if (isInstagramUrl(url)) {
+      return `
+        <div class="carousel-instagram-item">
+          <iframe src="${url}" loading="lazy" allowfullscreen></iframe>
+        </div>`;
+    }
+    return `
+      <div class="carousel-video-item">
+        <video src="${url}" controls preload="metadata" playsinline></video>
+      </div>`;
+  }).join("");
+
+  return `
+    <div class="banner-section-title">Featured Video</div>
+    <div class="media-scroll-carousel">${items}</div>`;
 }
 
 async function renderGrid(projectList) {
@@ -194,9 +209,9 @@ async function renderGrid(projectList) {
   );
 
   projectList.forEach((p, idx) => {
-    const card = document.createElement("article");
-    card.className = "project-door";
-    card.style.animationDelay = `${0.04 + idx * 0.06}s`;
+    const row = document.createElement("article");
+    row.className = "work-row";
+    row.style.animationDelay = `${0.03 + idx * 0.05}s`;
 
     const photos = projectPhotosList[idx] || [];
 
@@ -210,6 +225,8 @@ async function renderGrid(projectList) {
          </div>`
       : "";
 
+    const videoCarousel = buildEmbedCarousel(p.videos);
+
     const creditsHtml = (p.credits && p.credits.length)
       ? `<div class="inline-credits-list">
            ${p.credits.map(c => `
@@ -220,62 +237,81 @@ async function renderGrid(projectList) {
          </div>`
       : "";
 
-    card.innerHTML = `
-      <div class="door-thumb">
-      <img src="${p.thumbnail}" alt="${p.title}" loading="lazy"/>
-      <div class="door-badge">${p.badge}</div>
-        <div class="door-hover-title">
-          <small>${p.year} &mdash; ${p.category}</small>
-          <span>${p.title}</span>
+    row.innerHTML = `
+      <div class="row-top">
+        <div class="row-media-block">
+          <div class="row-media">
+            <img src="${p.thumbnail}" alt="${p.title}" loading="lazy"/>
+          </div>
+          <span class="row-tag">${p.badge}</span>
         </div>
+        <div class="row-meta">
+          <span class="row-eyebrow">${p.year} &mdash; ${p.category}</span>
+          <h2 class="row-title">${p.title}</h2>
+          <div class="row-client">${p.client}</div>
+        </div>
+        <button class="row-toggle" aria-label="Expand project details" aria-expanded="false">
+          <svg class="icon-folder icon-folder-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7z"/>
+          </svg>
+          <svg class="icon-folder icon-folder-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1l-1.4 8.8a1 1 0 0 1-1 .9H5.4a1 1 0 0 1-1-.9L3 8.2V7z"/>
+            <path d="M3 9.2h17"/>
+          </svg>
+        </button>
       </div>
-      <div class="door-details-banner">
-        <div class="banner-header">
-          <span class="banner-meta">${p.year} &mdash; ${p.category}</span>
-          <h2 class="banner-title">${p.title}</h2>
-          <div class="banner-client">Client: <span>${p.client}</span></div>
-        </div>
-        <p class="banner-desc">${p.fullDescription || "No project description available."}</p>
-        ${creditsHtml}
-        <div class="banner-media-wrapper">
-          ${typeof videoCarousel !== 'undefined' ? videoCarousel : ''}
-          ${typeof igCarousel !== 'undefined' ? igCarousel : ''}
+      <div class="row-detail">
+        <div class="row-detail-inner">
+          <p class="banner-desc">${p.fullDescription || "No project description available."}</p>
+          ${creditsHtml}
+          ${videoCarousel}
           ${photoCarousel}
+          <button class="banner-close-btn">Close</button>
         </div>
-        <button class="banner-close-btn">Close Project</button>
       </div>
     `;
 
-    card.addEventListener("click", (e) => {
-      if (e.target.closest(".door-details-banner") && !e.target.closest(".banner-close-btn")) return;
+    const toggleBtn = row.querySelector(".row-toggle");
+    const closeBtn = row.querySelector(".banner-close-btn");
 
-      const isActive = card.classList.contains("active");
+    const setActive = (active) => {
+      row.classList.toggle("active", active);
+      toggleBtn.setAttribute("aria-expanded", String(active));
+      if (!active) {
+        row.querySelectorAll("video").forEach(v => v.pause());
+      }
+    };
 
-      document.querySelectorAll(".project-door").forEach(c => {
-        c.classList.remove("active");
-        c.querySelectorAll("video").forEach(v => v.pause());
+    row.addEventListener("click", (e) => {
+      if (e.target.closest(".row-detail")) return;
+
+      const isActive = row.classList.contains("active");
+
+      document.querySelectorAll(".work-row").forEach(r => {
+        if (r !== row) {
+          r.classList.remove("active");
+          r.querySelector(".row-toggle")?.setAttribute("aria-expanded", "false");
+          r.querySelectorAll("video").forEach(v => v.pause());
+        }
       });
 
+      setActive(!isActive);
+
       if (!isActive) {
-        card.classList.add("active");
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            row.scrollIntoView({ behavior: "smooth", block: "nearest" });
           });
         });
       }
     });
 
-    grid.appendChild(card);
-  });
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setActive(false);
+    });
 
-  const allCards = Array.from(grid.querySelectorAll(".project-door"));
-  assignColClasses(allCards);
-
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => assignColClasses(allCards), 80);
+    grid.appendChild(row);
   });
 }
 
